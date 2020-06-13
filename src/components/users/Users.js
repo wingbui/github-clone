@@ -5,6 +5,13 @@ import Spinner from './../layout/Spinner';
 export default function Users({ users, loading }) {
   if (loading) {
     return <Spinner />;
+  }
+  if (users.length === 0) {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <h2>Oops!, you've just messed the keyboard!</h2>
+      </div>
+    );
   } else {
     return (
       <div className="users" style={usersStyle}>

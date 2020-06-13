@@ -20,8 +20,6 @@ export default class Search extends Component {
   };
 
   onChange = (e) => {
-    console.log(e.target);
-    console.log(e.currentTarget);
     const { name, value } = e.target;
     this.setState({ [name]: value, isEmpty: false });
   };

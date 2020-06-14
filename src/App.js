@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import './App.css';
 import Navbar from './components/layout/Navbar';
+import Alert from './components/layout/Alert';
 import Users from './components/users/Users';
 import Search from './components/users/Search';
 
@@ -10,6 +11,11 @@ class App extends Component {
   state = {
     users: [],
     loading: false,
+    alert: {
+      show: false,
+      msg: '',
+      type: 'success',
+    },
   };
 
   searchUsers = async (searchTerm) => {
@@ -21,6 +27,17 @@ class App extends Component {
     this.setState({ loading: false });
   };
 
+  setAlert = (alert) => {
+    const { msg, type, show } = alert;
+    this.setState({
+      alert: {
+        show,
+        msg,
+        type,
+      },
+    });
+  };
+
   async componentDidMount() {
     this.setState({ loading: true });
     setTimeout(async () => {
@@ -30,7 +47,7 @@ class App extends Component {
 
       this.setState({ users: res.data });
       this.setState({ loading: false });
-    }, 2000);
+    }, 1000);
   }
 
   render() {
@@ -38,7 +55,8 @@ class App extends Component {
       <div className="App">
         <Navbar />
         <div className="container">
-          <Search searchUsers={this.searchUsers} />
+          {this.state.alert.show && <Alert alert={this.state.alert} />}
+          <Search searchUsers={this.searchUsers} setAlert={this.setAlert} />
           <Users loading={this.state.loading} users={this.state.users} />
         </div>
       </div>

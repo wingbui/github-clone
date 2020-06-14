@@ -8,8 +8,15 @@ export default class Search extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+
     if (this.state.searchTerm === '') {
+      this.props.setAlert({ show: true, msg: 'please enter search terms', type: 'danger' });
       this.setState({ isEmpty: true });
+
+      setTimeout(() => {
+        this.props.setAlert({ show: false, msg: '', type: 'success' });
+      }, 4000);
+
       return;
     }
     this.props.searchUsers(this.state.searchTerm);

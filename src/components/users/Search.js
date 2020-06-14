@@ -1,31 +1,38 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 
 export default class Search extends Component {
+ static propTypes = {
+   searchUsers: PropTypes.func.isRequired,
+   setAlert: PropTypes.func.isRequired,
+ }
+
   state = {
     searchTerm: '',
     isEmpty: true,
   };
 
+  // handle submitting form
   onSubmit = (e) => {
     e.preventDefault();
 
     if (this.state.searchTerm === '') {
-      this.props.setAlert({ show: true, msg: 'please enter search terms', type: 'danger' });
+      this.props.setAlert({ msg: 'please enter search terms', type: 'danger' });
       this.setState({ isEmpty: true });
 
       setTimeout(() => {
-        this.props.setAlert({ show: false, msg: '', type: 'success' });
+        this.props.setAlert(null);
       }, 4000);
-
-      return;
+    } else {
+      this.props.searchUsers(this.state.searchTerm);
+      this.setState({
+        searchTerm: '',
+        isEmpty: true,
+      });
     }
-    this.props.searchUsers(this.state.searchTerm);
-    this.setState({
-      searchTerm: '',
-      isEmpty: true,
-    });
   };
 
+// handle form input changes
   onChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value, isEmpty: false });

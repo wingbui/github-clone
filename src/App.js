@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 import Navbar from './components/layout/Navbar';
@@ -11,13 +12,10 @@ class App extends Component {
   state = {
     users: [],
     loading: false,
-    alert: {
-      show: false,
-      msg: '',
-      type: 'success',
-    },
+    alert: null,
   };
 
+  // search users frorm github database
   searchUsers = async (searchTerm) => {
     this.setState({ loading: true });
     const res = await axios.get(
@@ -27,15 +25,19 @@ class App extends Component {
     this.setState({ loading: false });
   };
 
+  // set alert on of off
   setAlert = (alert) => {
-    const { msg, type, show } = alert;
-    this.setState({
-      alert: {
-        show,
-        msg,
-        type,
-      },
-    });
+    if (alert) {
+      const { type, msg } = alert;
+      this.setState({
+        alert: {
+          msg,
+          type,
+        },
+      });
+    } else {
+      this.setState({ alert: null });
+    }
   };
 
   async componentDidMount() {
@@ -52,14 +54,27 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Navbar />
-        <div className="container">
-          {this.state.alert.show && <Alert alert={this.state.alert} />}
-          <Search searchUsers={this.searchUsers} setAlert={this.setAlert} />
-          <Users loading={this.state.loading} users={this.state.users} />
+      <Router>
+        <div className="App">
+          <Navbar />
+          <div className="container">
+            <Alert alert={this.state.alert} />
+
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <>
+                    <Search searchUsers={this.searchUsers} setAlert={this.setAlert} />
+                    <Users loading={this.state.loading} users={this.state.users} />
+                  </>
+                )}
+              />
+            </Switch>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }

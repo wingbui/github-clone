@@ -7,10 +7,12 @@ import Navbar from './components/layout/Navbar';
 import Alert from './components/layout/Alert';
 import Users from './components/users/Users';
 import Search from './components/users/Search';
+import User from './components/users/User';
 
 class App extends Component {
   state = {
     users: [],
+    user: {},
     loading: false,
     alert: null,
   };
@@ -18,11 +20,21 @@ class App extends Component {
   // search users frorm github database
   searchUsers = async (searchTerm) => {
     this.setState({ loading: true });
+    console.log(process.env.REACT_APP_CLIENT_ID, process.env.REACT_APP_CLIENT_SECRET);
     const res = await axios.get(
-      `https://api.github.com/search/users?q=${searchTerm}&client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}`
+      `https://api.github.com/search/users?q=${searchTerm}&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`
     );
-    this.setState({ users: res.data.items });
-    this.setState({ loading: false });
+    this.setState({ users: res.data.items, loading: false });
+  };
+
+  // get a single user form api with :login param
+  getUser = async (login) => {
+    this.setState({ loading: true });
+    const res = await axios.get(
+      `https://api.github.com/users/${login}?client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`
+    );
+
+    this.setState({ user: res.data, loading: false });
   };
 
   // set alert on of off
@@ -44,11 +56,10 @@ class App extends Component {
     this.setState({ loading: true });
     setTimeout(async () => {
       const res = await axios.get(
-        `https://api.github.com/users?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}`
+        `https://api.github.com/users?client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`
       );
 
-      this.setState({ users: res.data });
-      this.setState({ loading: false });
+      this.setState({ users: res.data, loading: false });
     }, 1000);
   }
 
@@ -59,7 +70,6 @@ class App extends Component {
           <Navbar />
           <div className="container">
             <Alert alert={this.state.alert} />
-
             <Switch>
               <Route
                 exact
@@ -69,6 +79,12 @@ class App extends Component {
                     <Search searchUsers={this.searchUsers} setAlert={this.setAlert} />
                     <Users loading={this.state.loading} users={this.state.users} />
                   </>
+                )}
+              />
+              <Route
+                path="/users/:login"
+                render={(props) => (
+                  <User {...props} user={this.state.user} getUser={this.getUser} loading={this.state.loading} />
                 )}
               />
             </Switch>

@@ -1,16 +1,19 @@
 /* CSS orders: 
  - Google font
-  +++++ Roboto
-
  - Global Styles 
-  +++++ :root
-  +++++ * 
-  +++++ body
-
+ - Forms
+ - Container Div
+ - Center All 
  - Text Styles
-  +++++ .text-center
- 
-  +++++ .round-img 
+ - Grids
+ - Round Image
+ - Buttons
+ - Margin Padding
+ - Backgrounds
+ - Navbar
+ - Card
+ - Users
+ - Alert
  */
 
 /* Google font */
@@ -51,6 +54,34 @@ a:hover {
   color: var(--lightGray2);
 }
 
+ul {
+  list-style: none;
+}
+
+/* Form */
+input {
+  margin: 1.2rem 0;
+  display: block;
+}
+
+input[type='text'],
+input[type='search'],
+input[type='email'],
+input[type='password'],
+input[type='date'] {
+  display: block;
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border: 1px solid var(--lightGray1);
+  outline: none;
+}
+
+input[type='submit'],
+btn {
+  font: inherit;
+}
+
 /* Container div */
 .container {
   max-width: 1200px;
@@ -58,21 +89,57 @@ a:hover {
   padding: 0 2rem;
 }
 
+/* Center all */
+
+.all-center {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 /* Text Styles */
 .text-center {
   text-align: center;
 }
 
+.text-primary {
+  text-align: var(--primaryColor);
+}
+
+.text-dark {
+  color: var(--darkColor);
+}
+
+.text-success {
+  color: var(--successColor);
+}
+
+.text-danger {
+  color: var(--dangerColor);
+}
+
+/* Grids */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+}
+
+/* Round Image */
 .round-img {
   border-radius: 50%;
   width: 4rem;
 }
 
-/* Button */
+/* Buttons */
 .btn {
   cursor: pointer;
   display: inline-block;
-  /* font-size: 1rem; */
+  font-size: 1rem;
   padding: 0.4rem 1.3rem;
   margin-right: 0.5rem;
   transition: opacity 0.2s ease-in;
@@ -100,6 +167,10 @@ a:hover {
   background: var(--darkColor);
   color: var(--whiteColor);
 }
+.btn-light {
+  background-color: var(--lightColor);
+  color: var(--darkColor);
+}
 
 /* Margin Padding */
 .my-1 {
@@ -114,10 +185,21 @@ a:hover {
 /* Navbar */
 .navbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   color: var(--whiteColor);
   padding: 0.7rem 2rem;
   margin-bottom: 1rem;
+}
+
+.navbar ul {
+  display: flex;
+}
+
+.navbar a {
+  color: var(--whiteColor);
+  padding: 0.45rem;
+  margin: 0 0.25rem;
 }
 
 .navbar i {
@@ -135,6 +217,8 @@ a:hover {
   margin: 0.7rem 0;
 }
 
+/* List */
+
 /* Users */
 .users {
   display: grid;
@@ -142,32 +226,9 @@ a:hover {
   grid-gap: 1rem;
 }
 
-/* Form */
-input {
-  margin: 1.2rem 0;
-  display: block;
-}
-
-input[type='text'],
-input[type='search'],
-input[type='email'],
-input[type='password'],
-input[type='date'] {
-  display: block;
-  width: 100%;
-  padding: 0.4rem;
-  font-size: 1.2rem;
-  border: 1px solid var(--lightGray1);
-  outline: none;
-}
-
-input[type='submit'],
-btn {
-  font: inherit;
-}
+/* User */
 
 /* Alert */
-
 .alert {
   padding: 0.3rem 0.5rem;
   font-size: 0.8rem;
@@ -183,5 +244,7 @@ btn {
 }
 
 .alert i {
-  margin-right: 0.3rem;
+  margin-right: 0.2rem;
 }
+
+

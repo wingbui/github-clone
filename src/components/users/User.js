@@ -24,13 +24,8 @@ export class User extends Component {
       avatar_url,
       location,
       bio,
-      blog,
-      public_repos,
-      public_gists,
       html_url,
       hireable,
-      followers,
-      following,
     } = this.props.user;
     const { loading } = this.props;
     if (loading) {

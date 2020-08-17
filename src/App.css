@@ -228,6 +228,14 @@ btn {
 
 /* User */
 
+.userLocation {
+  margin-bottom: .75rem;
+}
+
+.userBio {
+  margin-top: .75rem;
+}
+
 /* Alert */
 .alert {
   padding: 0.3rem 0.5rem;
@@ -246,5 +254,3 @@ btn {
 .alert i {
   margin-right: 0.2rem;
 }
-
-

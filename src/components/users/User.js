@@ -18,15 +18,7 @@ export class User extends Component {
 
   render() {
     console.log(this.props);
-    const {
-      name,
-      login,
-      avatar_url,
-      location,
-      bio,
-      html_url,
-      hireable,
-    } = this.props.user;
+    const { name, login, avatar_url, location, bio, html_url, hireable } = this.props.user;
     const { loading } = this.props;
     if (loading) {
       return <Spinner />;
@@ -36,17 +28,19 @@ export class User extends Component {
         <Link to="/" className="btn btn-light">
           Back To Search
         </Link>
-        Hireable:{' '}
-        {hireable ? <i className="fa fa-check text-success"></i> : <i className="fa fa-times-circle text-danger"></i>}
+        <span>
+          Hireable:{' '}
+          {hireable ? <i className="fa fa-check text-success"></i> : <i className="fa fa-times-circle text-danger"></i>}
+        </span>
         <div className="card">
           <div className="all-center">
             <img src={avatar_url} alt={login} className="round-img" />
             <h2>{name}</h2>
-            {location && <p>Location: {location}</p>}
-            <a className="btn btn-light" href={html_url}>
+            {location && <p className="userLocation">Location: {location}</p>}
+            <a className="btn btn-dark" href={html_url}>
               visit Github site
             </a>
-            <p>{bio}</p>
+            <p className="userBio">{bio}</p>
           </div>
         </div>
       </>
